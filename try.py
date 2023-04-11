@@ -66,7 +66,8 @@ def show(update: Update, context: CallbackContext) -> None:
     movieset
     keyboard = []
     for i in movieset:
-        keyboard.append([InlineKeyboardButton(str(i), callback_data=str(i))])
+        likes = db_ref.child('movie/'+ i +'/likes' ).get()
+        keyboard.append([InlineKeyboardButton(str(i) + ' ' + str(likes) + 'likes', callback_data=str(i))])
     reply_markup = InlineKeyboardMarkup(keyboard)
     context.bot.send_message(chat_id=update.effective_chat.id, text= 'What movie would you like to view?',reply_markup = reply_markup)
 
@@ -95,9 +96,9 @@ def add(update: Update, context: CallbackContext):
 def like (update: Update, context: CallbackContext):
     likes = db_ref.child('movie/'+ context.user_data['movie']+'/likes' ).get()
     db_ref.child('movie/'+ context.user_data['movie']+'/likes' ).set(int(likes)+1)
-    keyboard = [[InlineKeyboardButton('Back to movie list', callback_data='movie')]]
+    keyboard = [[InlineKeyboardButton('Back', callback_data='movie')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
-    context.bot.send_message(chat_id=update.effective_chat.id,text=f"There are now {likes} likes",reply_markup = reply_markup)
+    context.bot.send_message(chat_id=update.effective_chat.id,text=f"There are now {likes + 1} likes",reply_markup = reply_markup)
     return CANCEL
 
 def review (update: Update, context: CallbackContext):
@@ -108,7 +109,7 @@ def review (update: Update, context: CallbackContext):
         context.bot.send_message(chat_id=update.effective_chat.id,text = i[0]+':'+i[1])    		
     keyboard = [[InlineKeyboardButton('confirm', callback_data='confirm')],[InlineKeyboardButton('cancel', callback_data='cancel')]]
     reply_markup = InlineKeyboardMarkup(keyboard)   
-    context.bot.send_message(chat_id=update.effective_chat.id,text="Type out your review and click confirm",reply_markup = reply_markup)
+    context.bot.send_message(chat_id=update.effective_chat.id,text="Type your review and click confirm",reply_markup = reply_markup)
     return CONFIRM
 
 def get_message(update: Update, context: CallbackContext):
