@@ -41,8 +41,8 @@ def main():
     updater = Updater(token=('5624610325:AAF1Y0xRDCzscp7mHrLuPLQPGHWTbU8muYc'), use_context=True)
     dispatcher = updater.dispatcher
     logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.INFO)
-
-
+    
+    dispatcher.add_handler(CommandHandler("start", start))
     handler = ConversationHandler(
       entry_points=[CommandHandler("show", show),CallbackQueryHandler(keyboard_callback)],
       states={
@@ -58,6 +58,9 @@ def main():
     dispatcher.add_handler(handler)
     updater.start_polling()
     updater.idle()
+
+def start(update: Update, context: CallbackContext) -> None:
+    context.bot.send_message(chat_id=update.effective_chat.id, text= 'type /show to show the movie list')
 
 def show(update: Update, context: CallbackContext) -> None:
     movieset
