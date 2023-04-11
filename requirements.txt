@@ -1,0 +1,7 @@
+telegram
+configparser
+python-telegram-bot==13.7
+firebase_admin
+telepot
+redis
+certifi
