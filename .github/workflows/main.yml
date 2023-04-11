@@ -29,6 +29,3 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/chatbot:latest
-      - 
-        name: Run Docker container
-        run: docker run ${{ secrets.DOCKERHUB_USERNAME }}/chatbot:latest

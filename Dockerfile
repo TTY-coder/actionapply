@@ -12,3 +12,5 @@ COPY . .
 
 # Run app.py when the container launches
 ENTRYPOINT ["python", "try.py"]
+
+RUN Run docker run mayakatty/chatbot:latest
