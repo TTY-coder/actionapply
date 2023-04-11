@@ -29,7 +29,7 @@ movieset = []
 for i in movie:
     movieset.append(i)
     
-ADD = 0 
+LIST = 0 
 LIKE = 1
 REVIEW = 2
 CONFIRM = 4
@@ -47,7 +47,7 @@ def main():
       entry_points=[CommandHandler("show", show),CallbackQueryHandler(keyboard_callback)],
       states={
 			
-            ADD: [CallbackQueryHandler(add)],
+            LIST: [CallbackQueryHandler(add)],
             LIKE:[CallbackQueryHandler(like)],
             CANCEL:[CallbackQueryHandler(cancel)],
             REVIEW:[CallbackQueryHandler(review)],
@@ -75,7 +75,7 @@ def keyboard_callback(update: Update, context: CallbackContext):
     keyboard = [[InlineKeyboardButton('View reviews', callback_data='review')],[InlineKeyboardButton('like',callback_data='like')]]
     reply_markup = InlineKeyboardMarkup(keyboard)
     context.bot.send_message(chat_id=update.effective_chat.id,text = 'What would you like to do',reply_markup = reply_markup)
-    return ADD
+    return LIST
 
 def add(update: Update, context: CallbackContext):
     query = update.callback_query
@@ -141,7 +141,7 @@ def cancel(update: Update, context: CallbackContext):
     # get the user's first name
     first_name = update.effective_chat.first_name
     last_name = update.effective_chat.last_name
-    context.bot.send_message(chat_id=update.effective_chat.id,text = f"Okay, no question for you then, take care, {first_name}{last_name}!")
+    context.bot.send_message(chat_id=update.effective_chat.id,text = f"Okay, thank you for your participation, {first_name}{last_name}!")
     return ConversationHandler.END
 
    
